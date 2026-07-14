@@ -79,6 +79,7 @@ child: Padding(
 
 
 
+// ignore: must_be_immutable
 class ReusableRow extends StatelessWidget{
 String title,value;
  ReusableRow({Key ? key, required this.title,required this.value}) : super(key: key);
