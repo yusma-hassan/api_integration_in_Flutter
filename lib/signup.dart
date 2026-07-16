@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' ;
+import 'welcome_screen.dart';
 
 class Signup extends StatefulWidget{
 
@@ -15,13 +16,15 @@ TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
 void login(String email,password)async{
+  print(email);
+print(password);
   
   try{
 
  Response response = await post(
   Uri.parse(""),  // use reqres api 
   headers: {
-    // i have to put my api key here 
+    
   },
   body:{
     "email" : email,
@@ -30,11 +33,18 @@ void login(String email,password)async{
    );
  if(response.statusCode == 200){
   var data = jsonDecode(response.body.toString());
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const WelcomeScreen(),
+    ),
+  );
   print(data["token"]);
 print("Login successfully");
 
  }else{
-  print("failed");
+  print(response.statusCode);
+  print(response.body);
 
  }
 
@@ -108,7 +118,7 @@ print(e.toString());
                 
               ),
               child: Center(
-                child: Text("Login",style: TextStyle(color: Colors.white),),
+                child: Text("Sign Up",style: TextStyle(color: Colors.white),),
               ),
             ),
           )
