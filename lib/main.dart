@@ -1,6 +1,4 @@
-
-
-import 'package:api_course/signup.dart';
+import 'package:api_course/upload_image.dart';
 import 'package:flutter/material.dart';
 
 
@@ -28,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  Signup (),
+      home:  UploadImage (),
     );
   }
 }
