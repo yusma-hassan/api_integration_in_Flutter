@@ -15,7 +15,9 @@ class UploadImage extends StatefulWidget{
 class _UploadImageState extends State<UploadImage> {
 File? image ;
 
-final _picker = ImagePicker();
+final _picker = ImagePicker(); /*Think of this as creating an image picker object.
+Now this object has functions like :pickImage(),pickMultiImage()
+*/
 
 bool showSpinner = false;
 
@@ -39,10 +41,19 @@ Future<void> uploadImage() async{
 setState(() {
   showSpinner = true;
 });
+ 
+var stream = new http.ByteStream(image!.openRead()); /*openRead() says
+"Read this file as bytes. 
+http.ByteStream(...)
 
-var stream = new http.ByteStream(image!.openRead());
-stream.cast();
-var length = await image!.length();
+The image may be several MB.
+
+Flutter doesn't send all bytes at once.
+
+Instead it sends them little by little.This is much more memory efficient.
+*/
+stream.cast(); /* This line changes the stream into the type expected by MultipartFile. */
+var length = await image!.length(); //The server needs to know "How big is this file?"
 var uri = Uri.parse("https://fakestoreapi.com/products");
 var request = new http.MultipartRequest("POST", uri);
 request.fields["title"] = "Static Title ";
@@ -91,7 +102,63 @@ request.fields["title"] = "Static Title ";
            
         child: Center(
           child: Image.file(
-            File(image!.path).absolute,
+            //File(image!.path).absolute,
+            image!, // this is the simplified form of File(image!.path).absolute,
+            
+            /*image
+
+is already a File.
+
+So when you write
+
+File(image!.path)
+
+you're creating another File object using the same path.
+
+Imagine this:
+
+File file1 = File("/storage/photo.jpg");
+File file2 = File(file1.path);
+
+Now both variables point to the same image.
+
+Nothing new was created on the device.
+
+So in this  code,
+
+File(image!.path)
+
+is actually unnecessary.
+
+ could simply write:
+
+Image.file(image!)
+
+and it would work exactly the same.
+
+5. .absolute
+
+Every file has a path.
+
+For example,
+
+photo.jpg
+
+This is called a relative path.
+
+An absolute path is the complete location:
+
+/storage/emulated/0/DCIM/Camera/photo.jpg
+
+.absolute returns a File whose path is the full absolute path.
+
+In this  case, image_picker already gives you an absolute path.
+
+So
+
+File(image!.path).absolute
+
+doesn't change anything. */
             height: 390,
             width: 390,
             fit: BoxFit.cover,
