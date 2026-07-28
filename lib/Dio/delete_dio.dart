@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-class PatchDio extends StatelessWidget{
+class DeleteDio extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Patch Dio",style: TextStyle(color: Colors.white),),
+        title: Text("Delete Dio",style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.deepPurple,
       ),
       body: Column(
@@ -22,8 +22,8 @@ decoration: BoxDecoration(
 ),
  
     child: TextButton(onPressed: () {
-      patchData();
-    }, child: Text("Patch Data",style: TextStyle(color: Colors.white),)),
+      deleteData();
+    }, child: Text("Delete Data",style: TextStyle(color: Colors.white),)),
   ),
 ),
         ],
@@ -33,15 +33,12 @@ decoration: BoxDecoration(
   }
 }
 
-Future patchData() async {
+Future deleteData() async {
 
 final dio = Dio();
 
 final response = await dio.get("https://jsonplaceholder.typicode.com/todos/1");
-final response2 = await dio.patch("https://jsonplaceholder.typicode.com/todos/1",
-data: {
-  "completed" : "true"
-});
+final response2 = await dio.delete("https://jsonplaceholder.typicode.com/todos/1");
 
 print(response.statusCode);
 print(response.data.toString());

@@ -1,13 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
 
-class PatchDio extends StatelessWidget{
+class DownloadFile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Patch Dio",style: TextStyle(color: Colors.white),),
+        title: Text("Delete Dio",style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.deepPurple,
       ),
       body: Column(
@@ -22,8 +25,8 @@ decoration: BoxDecoration(
 ),
  
     child: TextButton(onPressed: () {
-      patchData();
-    }, child: Text("Patch Data",style: TextStyle(color: Colors.white),)),
+      downloadFile();
+    }, child: Text("Download File",style: TextStyle(color: Colors.white),)),
   ),
 ),
         ],
@@ -33,19 +36,21 @@ decoration: BoxDecoration(
   }
 }
 
-Future patchData() async {
+Future downloadFile() async {
 
 final dio = Dio();
 
-final response = await dio.get("https://jsonplaceholder.typicode.com/todos/1");
-final response2 = await dio.patch("https://jsonplaceholder.typicode.com/todos/1",
-data: {
-  "completed" : "true"
-});
+Directory directory = await getApplicationDocumentsDirectory();
+final filePath = '${directory.path}/dioFile.txt';
+final response = await dio.download("https://filesamples.com/samples/document/txt/sample1.txt",
+filePath,
+);
+
 
 print(response.statusCode);
-print(response.data.toString());
+print("Saved at: $filePath");
 
-print(response2.statusCode);
-print(response2.data.toString());
+
+
 }
+
