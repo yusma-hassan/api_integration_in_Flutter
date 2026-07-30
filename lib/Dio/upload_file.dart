@@ -50,7 +50,7 @@ FilePickerResult? result = await FilePicker.platform.pickFiles();
 
 FormData data = FormData.fromMap(
   {
-"key" : "136a12bf80f5787c6bd86438c027fe40",
+"key" : "", // my api key from imgbb
 "name" : "MyImage",
 "image" :await MultipartFile.fromFile(file.path,
 
