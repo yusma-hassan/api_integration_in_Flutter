@@ -1,5 +1,5 @@
 
-import 'package:api_course/Dio/download_file.dart';
+import 'package:api_course/Dio/upload_file.dart';
 
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  DownloadFile(),
+      home:  UploadFile(),
     );
   }
 }
